@@ -17,7 +17,7 @@ const Login = () => {
   const[err, setErr] = useState("")
   const[loading, setLoading] = useState(false)
 
-  const { serverUrl } = useContext(userDataContext)
+  const { serverUrl, userData, setUserData } = useContext(userDataContext)
 
   // signin data to backend connctivity
   const handleLogin = async (e)=>{
@@ -26,11 +26,11 @@ const Login = () => {
     setLoading(true)
     try {
       let result = await axios.post(`${serverUrl}/api/auth/login`, {email, password}, {withCredentials : true}) //use to connect with backend and use withcredentials for pass cookie or messages
-      console.log(result);
+      setUserData(result.data)
        setLoading(false)
-      
+      navigate("/")
     } catch (error) {
-      console.log(error)
+      setUserData(null)
        setLoading(false)
       setErr(error.response.data.message)
     }
