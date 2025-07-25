@@ -5,6 +5,9 @@ import bcrypt from "bcryptjs";
 export const signUp = async (req, res) =>{
     try {
         const {name, password, email} = req.body;
+        if (!name || !email || !password) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
 
         const existEmail = await userModel.findOne({email});
 
@@ -18,12 +21,10 @@ export const signUp = async (req, res) =>{
         }
 
         // hash password
-        bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(password, salt,async function(err, hash) {
-
+        const hashPassword = await bcrypt.hash(password, 10);
         const user = userModel.create({
             name,
-            password : hash,
+            password : hashPassword,
             email
         })
 
@@ -36,10 +37,7 @@ export const signUp = async (req, res) =>{
             secure : false
 
         })
-         return res.status(200).json(user);
-    });
-   
-});
+        return res.status(200).json(user);    
     } catch (error) {
       return res.status(500).json({message : `sign up error : ${error}`});
     }
@@ -52,7 +50,7 @@ export const login = async (req, res) =>{
 
         const user = await userModel.findOne({email});
 
-        if(!existEmail){
+        if(!user){
             return res.status(400).json({message : "User not exist"})
         }
         
