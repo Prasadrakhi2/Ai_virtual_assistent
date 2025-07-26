@@ -8,7 +8,7 @@ export const getCurrentUser = async (req, res) =>{
         if(!user){
             return res.status(400).json({message : "user not found"})
         }
-        return res.status(200).json({ user })
+        return res.status(200).json(user)
     } catch (error) {
          return res.status(400).json({message : "get current user error"})
     }
@@ -34,7 +34,7 @@ export const updateAssistant = async (req, res) => {
             return res.status(400).json({ message: "User not found" });
         }
 
-        return res.status(200).json({ user: updatedUser });
+        return res.status(200).json(updatedUser);
     } catch (error) {
         return res.status(400).json({ message: "Update assistant error" });
     }

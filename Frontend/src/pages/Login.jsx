@@ -67,9 +67,9 @@ const Login = () => {
         {err.length > 0 && <p className='text-red-500'>*{err}</p>}
 
 
-        <button type='submit' className='min-w-[150px] h-[60px] mt-[30px] text-black font-semibold bg-white rounded-full text-[19px]' disabled={loading}>{loading ? "loading" : "Sign Up"}</button>
+        <button type='submit' className='min-w-[150px] h-[60px] mt-[30px] text-black font-semibold bg-white rounded-full text-[19px]' disabled={loading}>{loading ? "loading" : "Login"}</button>
 
-        <p className='text-white text-[18px] '>Don't have an account ? <span className='text-blue-400 cursor-pointer' onClick={()=> navigate('/signup')}>Login</span></p>
+        <p className='text-white text-[18px] '>Don't have an account ? <span className='text-blue-400 cursor-pointer' onClick={()=> navigate('/signup')}>SignUp</span></p>
       </form>
     </div>
   )
