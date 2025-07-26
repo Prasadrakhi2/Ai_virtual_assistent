@@ -1,10 +1,33 @@
 import React, { useContext, useState } from 'react'
 import { userDataContext } from '../context/UserContext'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Customize2 = () => {
 
-  const {userData} = useContext(userDataContext)
+  const {userData, backendImage, selectedImage, serverUrl, setUserData} = useContext(userDataContext)
   const [assistantName, setAssistantName] = useState(userData?.assistantName || "")
+   
+
+  const handleUpdateAssistant = async () =>{
+    try {
+
+      let formData = new FormData()
+      formData.append("assistantName", assistantName)
+      if (backendImage instanceof File || backendImage instanceof Blob) {
+        formData.append("assistantImage", backendImage);
+      } else if (selectedImage) {
+        formData.append("imageUrl", selectedImage);
+      }
+
+      const result = await axios.post(`${serverUrl}/api/user/update`, formData, {withCredentials : true})
+      console.log(result.data)
+      setUserData(result.data)
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
 
   return (
     <div className='w-full h-[100vh] bg-gradient-to-t from-[black] to-[#030353] flex justify-center items-center flex-col p-[20px] gap-[20px]'>
@@ -14,7 +37,10 @@ const Customize2 = () => {
       placeholder='Ex: sora'
         required  
         onChange={(e)=>setAssistantName(e.target.value)} value={assistantName}/>
-        {assistantName && <button type='submit' className='min-w-[150px] h-[60px] mt-[30px] text-black font-semibold bg-white rounded-full text-[19px] cursor-pointer' >Create</button>}
+        {assistantName && <button type='submit' className='min-w-[150px] h-[60px] mt-[30px] text-black font-semibold bg-white rounded-full text-[19px] cursor-pointer' onClick={()=>{
+          
+          handleUpdateAssistant()
+          }} >Create</button>}
         
     </div>
   )
