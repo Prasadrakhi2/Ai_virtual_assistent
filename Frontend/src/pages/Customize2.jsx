@@ -35,12 +35,14 @@ const Customize2 = () => {
         formData,
         { withCredentials: true }
       );
+      setLoading(false);
       console.log("API Response:", result.data);
       setUserData(result.data);
 
       // Only navigate after successful API call
       navigate("/");
     } catch (error) {
+      setLoading(false);
       console.log("API Error:", error);
       alert("Failed to update assistant. Please try again.");
     } finally {
