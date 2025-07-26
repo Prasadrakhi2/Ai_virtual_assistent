@@ -14,24 +14,28 @@ export const getCurrentUser = async (req, res) =>{
     }
 }
 
-export const updateAssistant = async (req, res)=>{
+export const updateAssistant = async (req, res) => {
     try {
-        const {assistentName, imageUrl} = req.body;
-        let assistentImage;
-        if(req.file){ //user selected image
-            assistentImage = await uploadOnCloudinary(req.file.path)
+        const { assistantName, imageUrl } = req.body;
+        let assistantImage = imageUrl;
+
+        if (req.file) {
+            const uploadResult = await uploadOnCloudinary(req.file.path);
+            assistantImage = uploadResult?.url || imageUrl;
         }
-        else{
-            assistentImage = imageUrl;
+
+        const updatedUser = await userModel.findByIdAndUpdate(
+            req.userId,
+            { assistantName, assistantImage },
+            { new: true }
+        ).select("-password");
+
+        if (!updatedUser) {
+            return res.status(400).json({ message: "User not found" });
         }
 
-        const user = await userModel.findByIdAndUpdate(req.userId, {
-            assistentName, assistentImage
-        }, {new : true}).select("-password")
-
-        return res.status(200).json(user)
-
+        return res.status(200).json({ user: updatedUser });
     } catch (error) {
-        return res.status(400).json({message : "update Assistent error"})
+        return res.status(400).json({ message: "Update assistant error" });
     }
 }

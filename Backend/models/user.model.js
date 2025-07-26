@@ -14,12 +14,18 @@ const userSchema = mongoose.Schema({
         type : String,
         required : true
     },
-    assistantName : String,
-    assistantImage : String,
+    assistantName : {
+        type : String,
+        default : ""
+    },
+    assistantImage : {
+        type : String,
+        default : ""
+    },
     history : [{
         type : String
     }]    
-}, {timeStamps : true});
+}, {timestamps : true}); // Corrected option name: timestamps (not timeStamps)
 
 const userModel = mongoose.model("user", userSchema)
 
