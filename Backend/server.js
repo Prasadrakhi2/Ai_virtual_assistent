@@ -7,6 +7,7 @@ import cors from 'cors'
 import connectDB from './config/db.js';
 import authRouter from './routes/user.rout.js';
 import userRouter from './routes/userAuth.rout.js';
+import geminiResponse from './gemini.js';
 
 const app = express();
 
@@ -23,6 +24,8 @@ app.use(cookieParser());
 // starting url = type of middleware
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
+
+
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, ()=>{
