@@ -9,12 +9,14 @@ import image5 from "../assets/image5.png"
 import image6 from "../assets/image6.jpeg"
 import image7 from "../assets/image7.jpeg"
 import { userDataContext } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const Costomize = () => {
  const {backendImage, setBackendImage,
         frontendImage, setFrontendImage,
         selectedImage, setSelectedImage} = useContext(userDataContext)
   const inputImage = useRef();
+  const navigate = useNavigate()
 
   const handleImage = (e) =>{
     const file = e.target.files[0]
@@ -47,7 +49,7 @@ const Costomize = () => {
     </div>
     <input type="file"  accept='image/*' ref={inputImage} hidden onChange={handleImage}/>
       </div>
-      {selectedImage &&  <button type='submit' className='min-w-[150px] h-[60px] mt-[30px] text-black font-semibold bg-white rounded-full text-[19px]'>Next</button>}
+      {selectedImage &&  <button type='submit' className='min-w-[150px] h-[60px] mt-[30px] text-black font-semibold bg-white rounded-full text-[19px] cursor-pointer' onClick={()=>navigate("/customize2")}>Next</button>}
      
       
     </div>
