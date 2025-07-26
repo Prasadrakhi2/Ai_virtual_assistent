@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { userDataContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import assistGif from "../assets/ai.gif"
-import assistGif1 from "../assets/user.gif"
 
 const Home = () => {
   const { userData, serverUrl, setUserData, getGeminiResponse } =
@@ -26,41 +24,27 @@ const Home = () => {
     }
   };
 
- const speak = (text) => {
-  if (!hasInteracted) {
-    console.warn("Voice blocked until user interacts");
-    return;
-  }
-
-  window.speechSynthesis.cancel();
-
-  const utterance = new SpeechSynthesisUtterance(text);
-  const voices = window.speechSynthesis.getVoices();
-
-  // Detect if the text contains Devanagari (Hindi) characters
-  const isHindi = /[\u0900-\u097F]/.test(text);
-
-  if (voices.length > 0) {
-    if (isHindi) {
-      // Try to find a Hindi voice
-      const hindiVoice = voices.find((v) =>
-        v.lang.toLowerCase().includes("hi")
-      );
-      utterance.voice = hindiVoice || voices[0];
-      utterance.lang = "hi-IN";
-    } else {
-      utterance.voice = voices[0];
-      utterance.lang = "en-US";
+  const speak = (text) => {
+    if (!hasInteracted) {
+      console.warn("Voice blocked until user interacts");
+      return;
     }
-  }
 
-  utterance.onerror = (e) => {
-    console.error("Speech error:", e.error);
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    const voices = window.speechSynthesis.getVoices();
+
+    if (voices.length > 0) {
+      utterance.voice = voices[0];
+    }
+
+    utterance.onerror = (e) => {
+      console.error("Speech error:", e.error);
+    };
+
+    window.speechSynthesis.speak(utterance);
   };
-
-  window.speechSynthesis.speak(utterance);
-};
-
 
   const handleCommand = (data) => {
     const { type, userInput, response } = data;
@@ -97,51 +81,42 @@ const Home = () => {
     }
   };
 
- useEffect(() => {
-  if (!userData?.assistantName || !hasInteracted) return;
+  useEffect(() => {
+    if (!userData?.assistantName || !hasInteracted) return;
 
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-  const recognition = new SpeechRecognition();
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
 
-  recognition.continuous = true;
-  recognition.lang = "en-US";
+    recognition.continuous = true;
+    recognition.lang = "en-US";
 
-  recognition.onresult = async (e) => {
-    const transcript = e.results[e.results.length - 1][0].transcript.trim();
-    
+    recognition.onresult = async (e) => {
+      const transcript = e.results[e.results.length - 1][0].transcript.trim();
+      console.log("heard : " + transcript);
 
-    if (
-      transcript
-        .toLowerCase()
-        .includes(userData.assistantName.toLowerCase())
-    ) {
-      const data = await getGeminiResponse(transcript);
-     
-      handleCommand(data);
-    }
-  };
+      if (
+        transcript
+          .toLowerCase()
+          .includes(userData.assistantName.toLowerCase())
+      ) {
+        const data = await getGeminiResponse(transcript);
+        console.log("Assistant response:", data);
+        handleCommand(data);
+      }
+    };
 
-  recognition.onerror = (e) => {
-    console.error("Recognition error:", e.error);
-    recognition.stop();
-  };
+    recognition.onerror = (e) => {
+      console.error("Recognition error:", e.error);
+    };
 
-  recognition.onend = () => {
-    console.warn("Recognition ended, restarting...");
-    if (hasInteracted) {
-      recognition.start(); // Restart when it stops
-    }
-  };
+    recognition.start();
+    setRecognitionInstance(recognition);
 
-  recognition.start();
-  setRecognitionInstance(recognition);
-
-  return () => {
-    recognition.stop();
-  };
-}, [userData, hasInteracted]);
-
+    return () => {
+      recognition.stop();
+    };
+  }, [userData, hasInteracted]);
 
   return (
     <div className="w-full h-[100vh] bg-gradient-to-t from-[black] to-[#02023d] flex justify-center items-center flex-col gap-[15px]">
@@ -181,11 +156,6 @@ const Home = () => {
       <h1 className="text-white text-[18px] font-semibold">
         I'm {userData?.assistantName}
       </h1>
-
-      {hasInteracted && (
-  <img src={assistGif} className="w-[150px] h-[150px] mt-4" alt="Assistant is listening..." />
-)}
-
     </div>
   );
 };
