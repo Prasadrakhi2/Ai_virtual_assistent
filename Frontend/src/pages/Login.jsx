@@ -71,6 +71,9 @@ const Login = () => {
 
         <p className='text-white text-[18px] '>Don't have an account ? <span className='text-blue-400 cursor-pointer' onClick={()=> navigate('/signup')}>SignUp</span></p>
       </form>
+      <footer className="absolute bottom-2 w-full text-center text-sm text-gray-200">
+        © {new Date().getFullYear()} Built by Rakhi Prasad. All rights reserved.
+      </footer>
     </div>
   )
 }
