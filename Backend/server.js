@@ -13,7 +13,7 @@ const app = express();
 
 // connect with frontend
 app.use(cors({
-    origin : "http://localhost:5173",
+    origin : "https://ai-virtual-assistent-frontend.onrender.com",
     credentials : true
 }))
 
