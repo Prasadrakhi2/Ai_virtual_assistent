@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import {useNavigate} from 'react-router-dom'
-import bgImage from '../assets/authBg.png'
+import bgImage from '../assets/image1.1.jpg'
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { userDataContext } from '../context/UserContext';

@@ -11,13 +11,13 @@ const App = () => {
   const { userData } = useContext(userDataContext);
 
   // Debug logging
-  console.log("App.jsx - userData:", userData);
-  console.log("App.jsx - assistantImage:", userData?.assistantImage);
-  console.log("App.jsx - assistantName:", userData?.assistantName);
-  console.log(
-    "App.jsx - condition:",
-    userData?.assistantImage && userData?.assistantName
-  );
+  // console.log("App.jsx - userData:", userData);
+  // console.log("App.jsx - assistantImage:", userData?.assistantImage);
+  // console.log("App.jsx - assistantName:", userData?.assistantName);
+  // console.log(
+  //   "App.jsx - condition:",
+  //   userData?.assistantImage && userData?.assistantName
+  // );
 
   return (
     <Routes>
