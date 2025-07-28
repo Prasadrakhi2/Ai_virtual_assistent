@@ -21,7 +21,7 @@
 <details>
   <summary>Click to Expand</summary>
   <ol>
-    <li><a href="#about-the-project">About The Project</a>
+    <li><a href="#-about-the-project">About The Project</a>
       <ul>
         <li><a href="#️-key-features">Key Features</a></li>
         <li><a href="#-tech-stack">Tech Stack</a></li>
@@ -77,4 +77,4 @@ Instructions for cloning the repo, installing packages, configuring environment 
 
 ### ⚙️ Setup
 
-- Allow microphone and nevigation of webpages.
+- Allow microphone and nevigation of webpages in your system.
