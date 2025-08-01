@@ -1,7 +1,5 @@
 <div align="center">
 
-  <!-- REMOVE THIS IF YOU DON'T HAVE A LOGO -->
-
   <h3 align="center"><span style="color:red">Orbyx AI</span> – AI Virtual Assistant</h3>
 
   <p align="center">
