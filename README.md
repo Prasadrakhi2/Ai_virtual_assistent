@@ -76,3 +76,4 @@ Instructions for cloning the repo, installing packages, configuring environment 
 ### ⚙️ Setup
 
 - Allow microphone and nevigation of webpages in your system.
+
