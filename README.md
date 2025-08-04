@@ -1,6 +1,6 @@
 <div align="center">
 
-  <h3 align="center"><span style="color:red">Orbyx AI</span> – AI Virtual Assistant</h3>
+  <h3 align="center"><span>Orbyx AI</span> – AI Virtual Assistant</h3>
 
   <p align="center">
     An AI-powered virtual assistant built with the MERN stack (MongoDB, Express.js, React.js, Node.js) that communicates through voice. It takes voice commands from the user, processes them using AI, and responds with voice output — creating a hands-free, interactive experience.
@@ -76,4 +76,5 @@ Instructions for cloning the repo, installing packages, configuring environment 
 ### ⚙️ Setup
 
 - Allow microphone and nevigation of webpages in your system.
+
 
